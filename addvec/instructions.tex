@@ -1,0 +1,34 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+
+\lhead{Vector Addition Lab}
+\rhead{\thepage}
+\cfoot{Vector Addition}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{Vector Addition Lab}
+\author{Vikings!}
+
+\begin{document}
+
+\maketitle
+
+\par In this lab, we will be experimenting with two vector programming interfaces to utilize vector ALU's of an Intel compatible processor.
+You will be writing a method \textit{addvec} in \textbf{addvec.c} which will perform a component-wise addition of vectors $A$ and $B$ of length $l$ and store the result in vector of equal length $C$.
+This assignment must be completed in two different ways:
+
+\begin{description}
+\item[1.] Using the SSE instruction intrinsics provided for your SSE capable system via \textbf{xmmintrin.h}
+\item[2.] Using the gcc vectors interface provided by the GNU compiler.
+\end{description}
+
+\end{document}
