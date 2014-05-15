@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+
+\lhead{Vector Programming Study}
+\rhead{\thepage}
+\cfoot{Vector Programming}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{Vector Programming Study}
+\author{Vikings!}
+
+\begin{document}
+
+\maketitle
+
+\par The goal of these assignments is to help solidify your understanding of both methods of vector programming in a high level language, and hopefully give you an insight into a usability comparison of the two methods of SSE vector programming for Intel chips.
+This assignment is being administered as part of a study of comparing the usability and programmer efficiency of the use of these two systems.
+Data will be collected regarding your compile/code intervals, the correctness of the assignment at each compile, runtime speed at each compile, and analysis information of the assembly code produced at each compile.
+
+\noindent Some things to keep in mind while you are completing this assignment:
+
+\begin{itemize}
+\item You must have \textbf{gcc} and GNU \textbf{make} installed in order to complete this assignment.
+\item You must have an SSE capable system to complete this assignment.
+To make sure your system is SSE capable, run \textbf{cat /proc/cpuinfo | grep sse} and ensure that there is output.
+\item Run the command \textbf{make} in your build directory to compile your project and run the test cases.
+There are built in test cases that check your program for correctness and efficiency.
+Note any warnings or errors in your runtime, they will give you clues as to what to fix.
+\item For vector programming, be especially aware of alignment of vector loads.
+\end{itemize}
+
+\end{document}
