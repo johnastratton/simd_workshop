@@ -1,0 +1,119 @@
+\documentclass{article}
+
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{alltt}
+\usepackage{multirow}
+\usepackage[margin=0.75in]{geometry}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\title{SSE Intrinsics Reference Sheet}
+\author{John A. Stratton}
+\date{}
+\maketitle
+
+\centerline{
+\begin{tabular}{ r | l } 
+\multicolumn{2}{c}{Getting Started} \\ \hline
+{\tt \#include <immintrin.h>} & Header for all intrinsics available for target platform.\\
+{\tt \#include <xmmintrin.h>} & Header for only SSE intrinsics (not SSE2 or later)\\
+{\tt \_\_mm128 x;} & Declares a 128-bit SSE vector of floating-point numbers \\
+\end{tabular}
+}
+\vfill
+
+\begin{tabular} {l r}
+
+\begin{minipage}{2.7in}
+\begin{tabular}{ l | c } 
+\multicolumn{2}{c}{Arithmetic Operations} \\ \hline
+\multicolumn{2}{c}{{\tt \_ss}: first element only} \\ 
+\multicolumn{2}{c}{{\tt \_ps}: each vector element} \\ \hline
+{\tt \_\_m128 \_mm\_add\_*s(a, b)} & a+b \\
+{\tt \_\_m128 \_mm\_sub\_*s(a, b)} & a-b \\
+{\tt \_\_m128 \_mm\_mul\_*s(a, b)} & a*b \\
+{\tt \_\_m128 \_mm\_div\_*s(a, b)} & a/b \\
+{\tt \_\_m128 \_mm\_sqrt\_*s(a)} & sqrt(a) \\
+{\tt \_\_m128 \_mm\_rcp\_*s(a)} & 1/a \\
+{\tt \_\_m128 \_mm\_rsqrt\_*s(a)} & 1/sqrt(a) \\
+{\tt \_\_m128 \_mm\_min\_*s(a, b)} & min \\
+{\tt \_\_m128 \_mm\_max\_*s(a, b)} & max \\
+\multicolumn{2}{c}{} \\
+\multicolumn{2}{c}{Logical Operations} \\ \hline
+{\tt \_\_m128 \_mm\_and\_ps(a, b)} & a \& b \\
+{\tt \_\_m128 \_mm\_andnot\_ps(a, b)} & (\~{}a) \& b \\
+{\tt \_\_m128 \_mm\_or\_ps(a, b)} & a $|$ b \\
+{\tt \_\_m128 \_mm\_xor\_ps(a, b)} & a \^{} b \\
+\end{tabular}
+\end{minipage} &
+
+\begin{minipage}{4.5in}
+\begin{tabular}{ l | c }
+\multicolumn{2}{c}{Comparison Operations} \\ \hline
+\multicolumn{2}{c}{{\tt \_cmp}: return value is a {\tt \_\_m128}} \\
+\multicolumn{2}{c}{If condition is true, result bits are all set to 1} \\
+\multicolumn{2}{c}{If condition is false, result bits are all set to 0} \\ \hline
+\multicolumn{2}{c}{{\tt \_ss}: operation on first element, others pass-through {\tt a}} \\ 
+\multicolumn{2}{c}{{\tt \_ps}: test each vector element} \\ \hline
+\multicolumn{2}{c}{{\tt \_cmi*\_ss}: return value is an {\tt int}} \\
+\multicolumn{2}{c}{First element only compared, return 1:true, 0:false} \\ \hline
+{\tt \_mm\_cm*eq\_*s(a, b)} & a == b \\ \hline
+{\tt \_mm\_cm*lt\_*s(a, b)} & \multirow{2}{*}{a $<$ b} \\
+{\tt \_mm\_cm*nge\_*s(a, b)} & \\ \hline
+{\tt \_mm\_cm*le\_*s(a, b)} & \multirow{2}{*}{a $<=$ b} \\
+{\tt \_mm\_cm*ngt\_*s(a, b)} & \\ \hline
+{\tt \_mm\_cm*gt\_*s(a, b)} & \multirow{2}{*}{a $>$ b} \\
+{\tt \_mm\_cm*nle\_*s(a, b)} & \\ \hline
+{\tt \_mm\_cm*ge\_*s(a, b)} & \multirow{2}{*}{a $>=$ b} \\
+{\tt \_mm\_cm*nlt\_*s(a, b)} & \\ \hline
+{\tt \_mm\_cm*ne\_*s(a, b)} & a $!=$ b \\
+\end{tabular}
+\end{minipage}\\
+\end{tabular}
+\vfill
+
+\centerline{
+\begin{tabular}{ l | c}
+\multicolumn{2}{c}{Memory Access Operations} \\ \hline
+{\tt \_\_m128 \_mm\_loadu\_ps(float *f)} & Loads a vector from address {\tt f} \\
+{\tt \_\_m128 \_mm\_load\_ps(float *f)} & Loads from address {\tt f}, which must be 16-byte aligned \\
+{\tt \_mm\_storeu\_ps(float *f, \_\_m128 a)} & Stores {\tt a} to address {\tt f} \\
+{\tt \_mm\_store\_ps(float *f, \_\_m128 a)} & Stores {\tt a} to address {\tt f}, which must be 16-byte aligned \\
+{\tt \_mm\_stream\_ps(float *f, \_\_m128 a)} & Same as {\tt \_mm\_store\_ps} bypassing cache \\
+\end{tabular}
+}
+\vfill
+\centerline{
+\begin{tabular}{ l | c }
+\multicolumn{2}{c}{Set and Shuffle Operations} \\ \hline
+{\tt \_\_m128 \_mm\_set1\_ps(float)} & Returns a new vector \{f,f,f,f\} \\
+{\tt \_\_m128 \_mm\_set\_ps(float z, float y, float x, float w)} & Create vector from scalars \{z,y,x,w\}\\
+{\tt \_\_m128 \_mm\_move\_ss(a, b)} & Returns a new vector \{a3, a2, a1, b0\} \\
+{\tt \_\_m128 \_mm\_shuffle\_ps(a, b, \_MM\_SHUFFLE(x, y, z, w))} & Returns a new vector \{bx, by, az, aw\} \\
+\end{tabular}
+}
+
+\vfill
+\centerline{
+\begin{tabular}{ l | c }
+\multicolumn{2}{c}{Horizontal Operations (SSE3)} \\ \hline
+{\tt \_\_m128 \_mm\_hadd\_ps(a, b)} & Horizontal add, result = \{b3+b2,b1+b0,a3+a2,a1+a0\} \\
+{\tt \_\_m128 \_mm\_hsub\_ps(a, b)} & Horizontal subtract, result = \{b3-b2,b1-b0,a3-a2,a1-a0\}\\
+\end{tabular}
+}
+
+\vfill
+\centerline{
+\begin{tabular}{ l | c }
+\multicolumn{2}{c}{Vector Extensions} \\ \hline
+{\tt typedef float float4 \_\_attribute\_\_((vector\_size(16)));} & Define a 16-byte vector type of floats\\
+{\tt float4 a = \{float, float, float, float\}} & A literal vector of four floats\\
+{\tt a[0]} & Access element 0 of vector {\tt a}\\
+\end{tabular}
+}
+
+
+\end{document}   
