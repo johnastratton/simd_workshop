@@ -1,0 +1,13 @@
+syntax: glob
+dist
+*.o
+*.zip
+data.txt
+gmon.out
+*.pdf
+*.swp
+*.swo
+*.bin
+main.do
+*.aux
+*.log
